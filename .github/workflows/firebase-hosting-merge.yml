@@ -95,4 +95,6 @@ jobs:
 
       - name: Deploy Functions
         working-directory: ./functions
-        run: npm install && npm run deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: npm i -g firebase-tools firebase && npm run deploy
