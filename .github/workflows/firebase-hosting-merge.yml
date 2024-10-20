@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Lint
-        run: npm run lint
+        run: cd functions && npm run lint && cd..
 
   deploy-dev:
     if: github.ref == 'refs/heads/develop'
