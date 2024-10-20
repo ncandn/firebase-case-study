@@ -21,6 +21,5 @@ jobs:
         run: npm install
 
       - name: Lint
-        run: cd functions
-      - run: npm run lint
-      - run: cd..
+        working-directory: ./functions
+        run: npm run lint
