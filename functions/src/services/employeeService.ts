@@ -1,8 +1,7 @@
 import { EmployeeRepository } from '../repositories/employeeRepository';
 import { validateBody } from "../util/validate";
 import { Employee } from '../models/employee';
-import { Result } from '../models/response';
-import { db } from '../config/firebase';
+import { Result, EmployeeResult } from '../models/response';
 
 const employeeRepository = new EmployeeRepository();
 
@@ -13,20 +12,48 @@ export class EmployeeService {
       return validateResult;
     }
 
-    const managerRef = db.collection("employees").doc(body.manager.id);
     const employeeData: Employee = {
       name: body.name,
       email: body.email,
       team: body.team,
       company: body.company,
-      manager: managerRef
+      manager: body.manager
     }
 
     await employeeRepository.createEmployee(employeeData);
 
     return {
       success: true,
-      message: `Employee record of ${body.name} is created successfully.`
+      message: `Employee record for ${body.name} is created successfully.`
+    };
+  }
+
+  async getEmployeeByID(id: string): Promise<EmployeeResult> {
+    const employee = await employeeRepository.getEmployeeByID(id);
+
+    return {
+      success: true,
+      response: employee,
+      message: `Employee record of id "${id}" is fetched successfully.`
+    };
+  }
+
+  async getAllEmployees(): Promise<EmployeeResult> {
+    const employees = await employeeRepository.getAllEmployees();
+
+    return {
+      success: true,
+      response: employees,
+      message: `All employee records are fetched successfully.`
+    }
+  }
+
+  async deleteEmployee(id: string): Promise<Result> {
+    await employeeRepository.deleteEmployee(id);
+
+    return {
+      success: true,
+      message: `Employee record of id "${id}" is deleted successfully.`
     }
   }
 }
