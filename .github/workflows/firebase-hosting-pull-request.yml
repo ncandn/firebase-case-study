@@ -21,4 +21,6 @@ jobs:
         run: npm install
 
       - name: Lint
-        run: cd functions && npm run lint && cd..
+        run: cd functions
+      - run: npm run lint
+      - run: cd..
