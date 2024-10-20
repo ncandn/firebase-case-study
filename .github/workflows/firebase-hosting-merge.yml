@@ -97,7 +97,7 @@ jobs:
         working-directory: ./functions
         run: |
           touch .env
-          echo PRIVATE_KEY=${{ secrets.PRIVATE_KEY }} >> .env
+          echo PRIVATE_KEY="${{ secrets.PRIVATE_KEY }}" | sed 's/\\n/\n/g' >> .env
           echo PROJECT_ID=${{ secrets.PROJECT_ID }} >> .env
           echo CLIENT_EMAIL=${{ secrets.CLIENT_EMAIL }} >> .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
