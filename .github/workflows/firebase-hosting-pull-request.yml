@@ -1,6 +1,6 @@
 name: CI/CD PR Request
 on:
-  push:
+  pull_request:
     branches:
       - main
       - develop
