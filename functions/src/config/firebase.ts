@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const { privateKey } = JSON.parse(process.env.PRIVATE_KEY || "");
+const {privateKey} = JSON.parse(process.env.PRIVATE_KEY || "");
 
 admin.initializeApp({
   credential: admin.credential.cert({
