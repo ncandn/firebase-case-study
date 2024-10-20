@@ -95,4 +95,4 @@ jobs:
 
       - name: Deploy Functions
         working-directory: ./functions
-        run: npm run deploy
+        run: npm install && npm run deploy
