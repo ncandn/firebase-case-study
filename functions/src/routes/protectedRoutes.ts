@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { CreateEmployee, GetEmployeeByID, GetAllEmployees, UpdateEmployee, DeleteEmployee } from "../controllers/employeeController";
+import {Router} from "express";
+import {CreateEmployee, GetEmployeeByID, GetAllEmployees, UpdateEmployee, DeleteEmployee} from "../controllers/employeeController";
 
 export default (router: Router) => {
   router.post("/employee", CreateEmployee);

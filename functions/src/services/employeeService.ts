@@ -1,11 +1,20 @@
-import { EmployeeRepository } from '../repositories/employeeRepository';
-import { validateBody } from "../util/validate";
-import { Employee } from '../models/employee';
-import { Result, EmployeeResult } from '../models/response';
+import {EmployeeRepository} from "../repositories/employeeRepository";
+import {validateBody} from "../util/validate";
+import {Employee} from "../models/employee";
+import {Result, EmployeeResult} from "../models/response";
 
 const employeeRepository = new EmployeeRepository();
 
+/**
+ * Service class for handling employee-related business logic.
+ * Interfaces with the EmployeeRepository for CRUD operations.
+ */
 export class EmployeeService {
+  /**
+   * Creates a new employee after validating the request body.
+   * @param {any} body - The request body containing employee data.
+   * @return {Promise<EmployeeResult | Result>} - A promise that resolves to an object indicating success or failure, along with a message and the employee data if successful.
+   */
   async createEmployee(body: any): Promise<EmployeeResult | Result> {
     const validateResult = validateBody(body);
     if (!validateResult.success) {
@@ -17,20 +26,20 @@ export class EmployeeService {
       email: body.email.toString().toLowerCase(),
       team: body.team,
       company: body.company,
-      manager: body.manager
-    }
+      manager: body.manager,
+    };
 
     if (await employeeRepository.checkIfEmployeeExists(null, employeeData.email)) {
       return {
         success: false,
-        message: `Employee record with the email of ${employeeData.email} already exists.`
+        message: `Employee record with the email of ${employeeData.email} already exists.`,
       };
     }
 
     if (employeeData.manager && !(await employeeRepository.checkIfEmployeeExists(body.manager, null))) {
       return {
         success: false,
-        message: `Couldn't find manager with the ID of ${employeeData.manager}.`
+        message: `Couldn't find manager with the ID of ${employeeData.manager}.`,
       };
     }
 
@@ -39,30 +48,46 @@ export class EmployeeService {
     return {
       success: true,
       response: newEmployee,
-      message: `Employee record for ${body.name} is created successfully.`
+      message: `Employee record for ${body.name} is created successfully.`,
     };
   }
 
+  /**
+   * Retrieves an employee by their ID.
+   * @param {string} id - The ID of the employee to retrieve.
+   * @return {Promise<EmployeeResult>} - A promise that resolves to an object indicating success, with the employee data and a success message.
+   */
   async getEmployeeByID(id: string): Promise<EmployeeResult> {
     const employee = await employeeRepository.getEmployeeByID(id);
 
     return {
       success: true,
       response: employee,
-      message: `Employee record of id "${id}" is fetched successfully.`
+      message: `Employee record of id "${id}" is fetched successfully.`,
     };
   }
 
+  /**
+   * Retrieves all employees with optional query filtering.
+   * @param {any | null} query - Optional query parameters for filtering employee results.
+   * @return {Promise<EmployeeResult>} - A promise that resolves to an object indicating success, with a list of employee records and a success message.
+   */
   async getAllEmployees(query: any | null): Promise<EmployeeResult> {
     const employees = await employeeRepository.getAllEmployees(query);
 
     return {
       success: true,
       response: employees,
-      message: `All employee records are fetched successfully.`
-    }
+      message: "All employee records are fetched successfully.",
+    };
   }
 
+  /**
+   * Updates an employee record by ID.
+   * @param {string} id - The ID of the employee to update.
+   * @param {any} body - The request body containing updated employee data.
+   * @return {Promise<EmployeeResult | Result>} - A promise that resolves to an object indicating success or failure, with the updated employee data or an error message.
+   */
   async updateEmployee(id: string, body: any): Promise<EmployeeResult | Result> {
     const validateResult = validateBody(body);
     if (!validateResult.success) {
@@ -75,23 +100,28 @@ export class EmployeeService {
     if (!employee) {
       return {
         success: true,
-        message: `Employee record of id "${id}" could not be found.`
+        message: `Employee record of id "${id}" could not be found.`,
       };
     }
 
     return {
       success: true,
       response: employee,
-      message: `Employee record of id "${id}" is updated successfully.`
+      message: `Employee record of id "${id}" is updated successfully.`,
     };
   }
 
+  /**
+   * Deletes an employee record by ID.
+   * @param {string} id - The ID of the employee to delete.
+   * @return {Promise<Result>} - A promise that resolves to an object indicating success, with a message confirming the deletion.
+   */
   async deleteEmployee(id: string): Promise<Result> {
     await employeeRepository.deleteEmployee(id);
 
     return {
       success: true,
-      message: `Employee record of id "${id}" is deleted successfully.`
-    }
+      message: `Employee record of id "${id}" is deleted successfully.`,
+    };
   }
 }

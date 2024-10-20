@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import { EmployeeService } from "../services/employeeService";
+import {NextFunction, Request, Response} from "express";
+import {EmployeeService} from "../services/employeeService";
 
 const employeeService = new EmployeeService();
 
@@ -11,7 +11,7 @@ export const CreateEmployee = async (req: Request, res: Response, next: NextFunc
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: `Failed to create employee; ${err}`
+      message: `Failed to create employee; ${err}`,
     });
   }
 
@@ -26,7 +26,7 @@ export const GetEmployeeByID = async (req: Request, res: Response, next: NextFun
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: `Failed to get employee; ${err}`
+      message: `Failed to get employee; ${err}`,
     });
   }
 
@@ -41,7 +41,7 @@ export const GetAllEmployees = async (req: Request, res: Response, next: NextFun
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: `Failed to get all employees; ${err}`
+      message: `Failed to get all employees; ${err}`,
     });
   }
 
@@ -56,7 +56,7 @@ export const UpdateEmployee = async (req: Request, res: Response, next: NextFunc
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: `Failed to get employee; ${err}`
+      message: `Failed to get employee; ${err}`,
     });
   }
 
@@ -71,7 +71,7 @@ export const DeleteEmployee = async (req: Request, res: Response, next: NextFunc
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: `Failed to delete employee; ${err}`
+      message: `Failed to delete employee; ${err}`,
     });
   }
 

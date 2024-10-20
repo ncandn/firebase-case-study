@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, {Router} from "express";
 import protectedRoutes from "./protectedRoutes";
 import authJWT from "../middlewares/auth";
 import employee from "./employeeRoutes";
@@ -6,11 +6,11 @@ import employee from "./employeeRoutes";
 const router = express.Router();
 
 export default (): Router => {
-	employee(router);
+  employee(router);
 
-	const protectedRouter = express.Router();
-	protectedRoutes(protectedRouter);
-	router.use("/protected", authJWT, protectedRouter);
+  const protectedRouter = express.Router();
+  protectedRoutes(protectedRouter);
+  router.use("/protected", authJWT, protectedRouter);
 
-	return router;
+  return router;
 };

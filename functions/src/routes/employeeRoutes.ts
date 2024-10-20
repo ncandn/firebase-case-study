@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { CreateEmployee, GetEmployeeByID, GetAllEmployees, UpdateEmployee, DeleteEmployee } from "../controllers/employeeController";
-import { GenerateAuthToken } from "../controllers/authController";
+import {Router} from "express";
+import {CreateEmployee, GetEmployeeByID, GetAllEmployees, UpdateEmployee, DeleteEmployee} from "../controllers/employeeController";
+import {GenerateAuthToken} from "../controllers/authController";
 
 export default (router: Router) => {
   router.post("/employee", CreateEmployee);

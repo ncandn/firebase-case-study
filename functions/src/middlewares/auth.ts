@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import {Request, Response, NextFunction} from "express";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "MOCKJWTSECRET";
@@ -9,14 +9,14 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   if (authHeader) {
     const token = authHeader.split(" ")[1];
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    jwt.verify(token, JWT_SECRET, (err) => {
       if (err) {
-        res.status(403).json({ message: "Token is not valid" });
+        res.status(403).json({message: "Token is not valid"});
       }
 
       next();
     });
   } else {
-    res.status(401).json({ message: "Authorization header is missing" });
+    res.status(401).json({message: "Authorization header is missing"});
   }
 };
