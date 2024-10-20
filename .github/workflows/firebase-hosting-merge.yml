@@ -81,7 +81,7 @@ jobs:
           node-version: "20"
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install && npm i -g firebase-tools firebase
 
       - name: Deploy to Production
         run: echo "Deploying to Production Environment"
@@ -97,4 +97,8 @@ jobs:
         working-directory: ./functions
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: npm i -g firebase-tools firebase && npm run deploy
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: npm run deploy
