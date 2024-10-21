@@ -3,6 +3,7 @@ export interface Employee {
   email: string;
   team: string;
   company: string;
+  id?: string;
   manager?: FirebaseFirestore.DocumentReference | string;
   createdAt?: FirebaseFirestore.Timestamp;
   updatedAt?: FirebaseFirestore.Timestamp;

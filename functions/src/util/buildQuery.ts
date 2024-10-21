@@ -16,8 +16,8 @@ export async function buildQuery(collection: any, query: any): Promise<FirebaseF
     }
   }
 
-  if ('limit' in query) {
-    firestoreQuery = firestoreQuery.limit(parseInt(query['limit']));
+  if ("limit" in query) {
+    firestoreQuery = firestoreQuery.limit(parseInt(query["limit"]));
   }
 
   return firestoreQuery;

@@ -45,7 +45,7 @@ export class EmployeeRepository {
       updatedAt: firestore.Timestamp.fromDate(new Date()),
     });
 
-    return (await employeeRef.get()).data() as Employee;
+    return {...(await employeeRef.get()).data(), id: employeeRef.id} as Employee;
   }
 
   /**
@@ -55,7 +55,7 @@ export class EmployeeRepository {
    */
   async getEmployeeByID(id: string): Promise<Employee | null> {
     const doc = await employeeCollection.doc(id).get();
-    return doc.exists ? (doc.data() as Employee) : null;
+    return doc.exists ? ({...doc.data(), id: doc.id} as Employee) : null;
   }
 
   /**
@@ -65,7 +65,7 @@ export class EmployeeRepository {
    */
   async getAllEmployees(query: any | null): Promise<Employee [] | null> {
     const snapshot = query ? await (await buildQuery(employeeCollection, query)).get() : await employeeCollection.get();
-    return snapshot.docs.map((doc) => doc.data() as Employee);
+    return snapshot.docs.map((doc) => ({...doc.data(), id: doc.id} as Employee));
   }
 
   /**
@@ -84,7 +84,7 @@ export class EmployeeRepository {
         updatedAt: firestore.Timestamp.fromDate(new Date()),
       });
 
-      return doc.data() as Employee;
+      return {...doc.data(), id: doc.id} as Employee;
     }
 
     return null;
