@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "3cd4c8f5-a3a5-42cd-ae7c-a058fd64cd83",
+		"name": "Incompass Firebase",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19484081"
+	},
+	"item": [
+		{
+			"name": "Protected",
+			"item": [
+				{
+					"name": "Get Auth Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://app-zzic6knv4q-uc.a.run.app/api/auth",
+							"protocol": "https",
+							"host": [
+								"app-zzic6knv4q-uc",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Will Ferrell\",\r\n    \"email\": \"wferrell@incompass.com\",\r\n    \"team\": \"IT\",\r\n    \"company\": \"Incompass Labs\",\r\n    \"manager\": \"fb3vyOPOrQMw2uFKYa1D\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://app-zzic6knv4q-uc.a.run.app/api/protected/employee",
+							"protocol": "https",
+							"host": [
+								"app-zzic6knv4q-uc",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"api",
+								"protected",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employee by ID Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik1PQ0tJRCIsInVzZXJuYW1lIjoiTU9DS1VTRVIiLCJpYXQiOjE3Mjk0NTAzMTgsImV4cCI6MTcyOTUzNjcxOH0.g5cGhHimp6zNc_HH2RATRPyibsxbe05JykyNsNN2zcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://app-zzic6knv4q-uc.a.run.app/api/protected/employee/:id",
+							"protocol": "https",
+							"host": [
+								"app-zzic6knv4q-uc",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"api",
+								"protected",
+								"employee",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "QlFuL6RCZHIGyh4ieqcW"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Employees Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik1PQ0tJRCIsInVzZXJuYW1lIjoiTU9DS1VTRVIiLCJpYXQiOjE3Mjk0NTAzMTgsImV4cCI6MTcyOTUzNjcxOH0.g5cGhHimp6zNc_HH2RATRPyibsxbe05JykyNsNN2zcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://app-zzic6knv4q-uc.a.run.app/api/protected/employee?team=IT",
+							"protocol": "https",
+							"host": [
+								"app-zzic6knv4q-uc",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"api",
+								"protected",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "team",
+									"value": "IT"
+								},
+								{
+									"key": "company",
+									"value": "Incompass Labs",
+									"disabled": true
+								},
+								{
+									"key": "manager",
+									"value": "fb3vyOPOrQMw2uFKYa1D",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alter Employee Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Will Ferrell\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://app-zzic6knv4q-uc.a.run.app/api/protected/employee/:id",
+							"protocol": "https",
+							"host": [
+								"app-zzic6knv4q-uc",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"api",
+								"protected",
+								"employee",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "QlFuL6RCZHIGyh4ieqcW",
+									"description": "Employee ID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Employee Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://app-zzic6knv4q-uc.a.run.app/api/protected/employee/:id",
+							"protocol": "https",
+							"host": [
+								"app-zzic6knv4q-uc",
+								"a",
+								"run",
+								"app"
+							],
+							"path": [
+								"api",
+								"protected",
+								"employee",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "RsODp5sJ8U2zcCjXhTre"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "JWT Auth Bearer Token"
+		},
+		{
+			"name": "Create Employee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Johnny Silverhand\",\r\n    \"email\": \"choom@incompass.com\",\r\n    \"team\": \"IT\",\r\n    \"company\": \"Incompass Labs\",\r\n    \"manager\": \"fb3vyOPOrQMw2uFKYa1D\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app-zzic6knv4q-uc.a.run.app/api/employee",
+					"protocol": "https",
+					"host": [
+						"app-zzic6knv4q-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5001/incompass-case-study/us-central1/app/api/employee/:id",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"incompass-case-study",
+						"us-central1",
+						"app",
+						"api",
+						"employee",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "QlFuL6RCZHIGyh4ieqcW"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://app-zzic6knv4q-uc.a.run.app/api/employee",
+					"protocol": "https",
+					"host": [
+						"app-zzic6knv4q-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"employee"
+					],
+					"query": [
+						{
+							"key": "company",
+							"value": "Incompass Labs",
+							"disabled": true
+						},
+						{
+							"key": "manager",
+							"value": "fb3vyOPOrQMw2uFKYa1D",
+							"disabled": true
+						},
+						{
+							"key": "team",
+							"value": "IT",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alter Employee",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Will Ferrell\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app-zzic6knv4q-uc.a.run.app/api/employee/:id",
+					"protocol": "https",
+					"host": [
+						"app-zzic6knv4q-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"employee",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "QlFuL6RCZHIGyh4ieqcW",
+							"description": "Employee ID"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Employee",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://app-zzic6knv4q-uc.a.run.app/api/employee/:id",
+					"protocol": "https",
+					"host": [
+						"app-zzic6knv4q-uc",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"employee",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "RsODp5sJ8U2zcCjXhTre"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

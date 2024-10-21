@@ -11,11 +11,13 @@ export async function buildQuery(collection: any, query: any): Promise<FirebaseF
       const managerRef = collection.doc(query[i] as string);
       firestoreQuery = firestoreQuery.where(i as string, "==", managerRef);
       continue;
-    } else if (i as string === "limit") {
-      firestoreQuery = firestoreQuery.limit(parseInt(query[i]));
+    } else if (i as string !== "limit") {
+      firestoreQuery = firestoreQuery.where(i as string, "==", query[i] as string);
     }
+  }
 
-    firestoreQuery = firestoreQuery.where(i as string, "==", query[i] as string);
+  if ("limit" in query) {
+    firestoreQuery = firestoreQuery.limit(parseInt(query["limit"]));
   }
 
   return firestoreQuery;
