@@ -55,9 +55,16 @@ export class EmployeeService {
   /**
    * Retrieves an employee by their ID.
    * @param {string} id - The ID of the employee to retrieve.
-   * @return {Promise<EmployeeResult>} - A promise that resolves to an object indicating success, with the employee data and a success message.
+   * @return {Promise<EmployeeResult | Result>} - A promise that resolves to an object indicating success, with the employee data and a success message.
    */
-  async getEmployeeByID(id: string): Promise<EmployeeResult> {
+  async getEmployeeByID(id: string): Promise<EmployeeResult | Result> {
+    if (!(await employeeRepository.checkIfEmployeeExists(id, null))) {
+      return {
+        success: false,
+        message: `Employee record with the ID of ${id} does not exist.`,
+      };
+    }
+
     const employee = await employeeRepository.getEmployeeByID(id);
 
     return {
@@ -89,6 +96,13 @@ export class EmployeeService {
    * @return {Promise<EmployeeResult | Result>} - A promise that resolves to an object indicating success or failure, with the updated employee data or an error message.
    */
   async updateEmployee(id: string, body: any): Promise<EmployeeResult | Result> {
+    if (!(await employeeRepository.checkIfEmployeeExists(id, null))) {
+      return {
+        success: false,
+        message: `Employee record with the ID of ${id} does not exist.`,
+      };
+    }
+
     const validateResult = validateBody(body);
     if (!validateResult.success) {
       return validateResult;
@@ -117,6 +131,13 @@ export class EmployeeService {
    * @return {Promise<Result>} - A promise that resolves to an object indicating success, with a message confirming the deletion.
    */
   async deleteEmployee(id: string): Promise<Result> {
+    if (!(await employeeRepository.checkIfEmployeeExists(id, null))) {
+      return {
+        success: false,
+        message: `Employee record with the ID of ${id} does not exist.`,
+      };
+    }
+
     await employeeRepository.deleteEmployee(id);
 
     return {
