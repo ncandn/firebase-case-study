@@ -1,43 +1,3 @@
-# Firebase Case Study
-
-This is a RESTful API for managing employees, built using **Node.js**, **Express.js**, **TypeScript**, and **Firestore** (Firebase). It supports CRUD operations for employees and provides additional features such as access tokens for security, rate limiting, search and filtering, and automated backups.
-
-## Features
-
-### Key Requirements (Completed):
-
-1.  **Deploy Firebase Cloud Functions**:
-
-    - Firebase Cloud Functions project developed with Express is initialized and configured.
-    - The API can be accessed through the following link: .
-
-2.  **Use Firestore (NoSQL Database)**:
-
-    - Firestore is used as the primary NoSQL database.
-    - Fields are configured as intended, each corresponding with an appropriate type.
-    - Employee relationships (e.g., manager details) are handled via references.
-    - Added 2 extra fields: `createdAt: Timestamp, updatedAt: Timestamp`
-
-| Field       | Type        |
-| ----------- | ----------- |
-| `name`      | `string`    |
-| `email`     | `string`    |
-| `team`      | `string`    |
-| `company`   | `string`    |
-| `manager`   | `reference` |
-| `createdAt` | `Timestamp` |
-| `updatedAt` | `Timestamp` |
-
-3.  **CI/CD Workflow**:
-
-    - Automated deployments using GitHub Actions.
-    - Separate deployment workflows for development, staging, and production environments.
-
-4.  **API Access Token**:
-
-    - Implemented access token-based authentication to secure API endpoints.
-    - Tokens are valid for 24 hours, ensuring only authorized users can access protected routes.
-
 # Employee Management System API
 
 This project is a RESTful API for managing employees, deployed to **Firebase Functions** and built using **Node.js**, **Express**, and **TypeScript**. It features a backend server for employee data management and implements secure access, efficient database querying, and automated CI/CD workflows.
@@ -50,6 +10,8 @@ The project is deployed using **Firebase Functions**, allowing for scalable, ser
 - **Node.js + Express.js**: Provides routing and request handling for API endpoints.
 - **TypeScript**: Ensures type safety, better development experience, and fewer runtime errors.
 
+![Firebase Functions](https://github.com/ncandn/firebase-case-study/blob/main/docs/images/Firebase_Functions.png?raw=true)
+
 ## Database
 
 The project uses **Firestore**, a NoSQL database from Firebase, as the primary data store. We have optimized database queries by adding **indexes** for composite queries and **scheduled backups** to ensure data resilience.
@@ -57,6 +19,8 @@ The project uses **Firestore**, a NoSQL database from Firebase, as the primary d
 ### Key Database Features:
 
 - **Indexes**: Created to optimize performance, particularly for queries that filter or sort by fields such as `team`, `company`, `manager`, and `name`.
+  ![Firestore Indexes](https://github.com/ncandn/firebase-case-study/blob/main/docs/images/Firestore_Indexes.png?raw=true)
+
 - **Scheduled Backups**: Regular backups are scheduled to Google Cloud Storage for data recovery and disaster management.
 - **Fields**: The key fields stored for each employee include:
   | Field | Type |
@@ -87,23 +51,37 @@ src/
 
 ## CI/CD
 
+![Github Actions](https://github.com/ncandn/firebase-case-study/blob/main/docs/images/Github_Actions.png?raw=true)
+
 The project uses **GitHub Actions** to automate continuous integration and deployment (CI/CD). The workflow is configured to:
 
 - Automatically **deploy to Firebase** whenever changes are pushed to the `main` branch.
 - Mock deployments to STG and DEV instances (if exists).
 - Run tests and check for linting issues before deployment.
 - Environment variables and sensitive information are managed securely via GitHub Secrets.
+  ![Github Secrets](https://github.com/ncandn/firebase-case-study/blob/main/docs/images/Github_Secrets.png?raw=true)
 
-### Key CI/CD Features:
+### CI/CD Workflows:
 
-- **Automated Deployment**: Upon every push to the `main` branch, the latest code is built and deployed to Firebase.
-- **Continuous Integration**: The workflow runs tests and checks code quality before deployment to ensure reliability.
+- **`firebase-hosting-pull-request`**: A mockup GitHub Actions job that is triggered when a Pull Request is opened. Ideally, in this workflow, we run a code review tool, AI tool, Linter, and anything that comes to mind that has to be done in a pre-deploy stage.
+
+  This workflow right now only builds the code and run Lint command for now.
+
+- **`firebase-hosting-merge`**: This workflow triggers whenever there's a merge (manual or via PR merge), and only targets `develop`, `staging`, and `main` branches. The job itself:
+  - Builds the code,
+  - Runs Lint,
+  - Installs all dependencies,
+  - Deploys to Firebase Hosting,
+  - Creates a `.env` file and populates from GitHub Secrets (in order to prevent keeping a `.env` file in the repository itself, for security purposes),
+  - Finally, deploys to Firebase Functions.
+
+![Firebase Hosting](https://github.com/ncandn/firebase-case-study/blob/main/docs/images/Hosting_CI.png?raw=true)
 
 ## API Documentation
 
 ### Base URL:
 
-- **URL**: `<your-production-url>`
+- **URL**: `https://app-zzic6knv4q-uc.a.run.app`
 
 ### Endpoints:
 
@@ -196,3 +174,27 @@ Then the protected endpoints mentioned above can be accessed by placing protecte
 - **Example**:
 
   `GET /api/protected/employee/12345`
+
+## Extra Features
+
+### Scheduled Backup:
+
+Added scheduled backup via Google Cloud. Using the following configuration command, the system now has a Disaster Recovery:
+
+```
+firebase firestore:backups:schedules:create --database '(default)' --recurrence 'WEEKLY' --retention '14w' --day-of-week 'SATURDAY'
+```
+
+![Scheduled Backup](https://github.com/ncandn/firebase-case-study/blob/main/docs/images/ScheduledBackup.png?raw=true)
+
+### Protected Routes:
+
+By utilizing API Access Tokens, all of the endpoints have protected alternatives, for testing purposes. Using JWT, a user retrieves an Auth Token which is valid for 24 hours, to gain access to these protected endpoints.
+
+See [Authentication](#authentication) for more information.
+
+### Rate Limiter:
+
+In order to limit access and prevent multiple unwanted requests from the same IP, a rate limiter is introduced. By default, in a 15 minutes time window, only up to 500 requests are allowed from the same IP.
+
+![Rate Limiter](https://github.com/ncandn/firebase-case-study/blob/main/docs/images/Rate_Limiter.png?raw=true)
