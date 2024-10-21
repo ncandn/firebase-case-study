@@ -56,7 +56,7 @@ export const UpdateEmployee = async (req: Request, res: Response, next: NextFunc
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: `Failed to get employee; ${err}`,
+      message: `Failed to update employee; ${err}`,
     });
   }
 
